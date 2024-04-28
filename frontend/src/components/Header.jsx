@@ -13,10 +13,10 @@ function Header() {
   const location = useLocation();
   const currentRoute = location.pathname;
 
-  const onLogout = () => {
-    dispatch(logout())
-    dispatch(clearOrders())
-    navigate('/')
+  const onLogout = async () => {
+    await dispatch(logout())
+   await  dispatch(clearOrders())
+    navigate('/login')
   }
 
   return (

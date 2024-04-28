@@ -29,21 +29,17 @@ const BookList = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                console.log('shouldStopLoadMore.current ',entries[0].isIntersecting);
-                // if(entries[0].isIntersecting){
-                    console.log('outside if');
+                if (entries[0].isIntersecting) {
                     if (
                         !shouldStopLoadMore.current &&
                         !isLoading &&
                         totalRecords >= page * 10
                     ) {
-                        console.log('final if');
                         setPage((prevPage) => prevPage + 1); // Increment page
                     }
-
-                // }
+                }
             },
-            { threshold: 1 }
+            { threshold: 0.25 }
         );
 
         if (observerTarget.current) {
@@ -55,11 +51,11 @@ const BookList = () => {
                 observer.unobserve(observerTarget.current);
             }
         };
-    }, [observerTarget, page,totalRecords ]);
+    }, [observerTarget]);
 
-    // if (!books) {
-    //     return <Spinner />;
-    // }
+    if (!books) {
+        return <Spinner />;
+    }
 
     return (
         <div>
@@ -68,7 +64,7 @@ const BookList = () => {
                 spacing={3}
                 style={{ display: "flex", flexDirection: "row" }}
             >
-                {books?.map((book) => (
+                {books?.map((book, index) => (
                     <Grid item xs={12} sm={6} md={4} key={book.id}>
                         <BookDetails
                             key={book.id}
@@ -77,7 +73,7 @@ const BookList = () => {
                         />
                     </Grid>
                 ))}
-                {isLoading && <Spinner />} {/* Show spinner while loading */}
+                {isLoading && <Spinner />}
             </Grid>
             <div ref={observerTarget}></div>
         </div>

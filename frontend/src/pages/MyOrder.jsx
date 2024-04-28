@@ -30,16 +30,14 @@ const MyOrder = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-              if(entries[0].isIntersecting)
-                {if (
-                    
+                if (
+                    entries[0].isIntersecting &&
                     !shouldStopLoadMore.current &&
                     !isLoading &&
                     totalOrders >= page * 10
                 ) {
-                  setPage((prevPage) => prevPage + 1); // Increment page
-                }}
-                
+                    setPage((prevPage) => prevPage + 1); // Increment page
+                }
             },
             { threshold: 1 }
         );
@@ -59,20 +57,16 @@ const MyOrder = () => {
         return <Spinner />;
     }
 
-    if(orders.length === 0){
-      return <h1>No data found!</h1>
+    if (orders.length === 0) {
+        return <h1>No data found!</h1>;
     }
 
     return (
         <>
             <Grid container spacing={3}>
-                {orders?.map((book,index) => (
+                {orders?.map((book, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
-                        <BookDetails
-                            key={index}
-                            book={book}
-                            canCancel={true}
-                        />
+                        <BookDetails key={index} book={book} canCancel={true} />
                     </Grid>
                 ))}
             </Grid>

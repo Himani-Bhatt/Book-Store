@@ -88,6 +88,8 @@ export const bookSlice = createSlice({
         logout: (state) => {
             state.orders = [];
             state.totalOrders = 0;
+            state.totalRecords = 0;
+            state.books = [];
             state.isLoading = false;
         },
     },
@@ -144,6 +146,8 @@ export const bookSlice = createSlice({
             .addCase(clearOrders.fulfilled, (state, action) => {
                 state.orders = [];
                 state.totalOrders = 0;
+                state.totalRecords = 0;
+                state.books = [];
                 state.isLoading = false;
             });
     },
